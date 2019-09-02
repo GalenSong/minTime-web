@@ -9,7 +9,7 @@ class RouteView extends React.Component{
     render() {
         return (
             <Router>
-                <Route path="/" component={Workspace} />
+                <Route path="/" exact component={Workspace} />
                 <Route path="/login" component={Login} />
                 <Route path="/signup" component={SignUp} />
             </Router>

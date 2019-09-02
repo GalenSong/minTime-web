@@ -112,7 +112,7 @@ export default class SignUp extends React.Component {
 
     componentDidMount() {
         getPublicKey().then((value) => {
-            localStorage.publicKey = value.data.publicKey;
+            localStorage.publicKey = value.data.key;
         }).catch((error) => {
             console.log(error);
         });

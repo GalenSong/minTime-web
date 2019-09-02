@@ -34,7 +34,7 @@ export default class Login extends React.Component {
 
     componentDidMount() {
         getPublicKey().then((value) => {
-            localStorage.publicKey = value.data.publicKey;
+            localStorage.publicKey = value.data.key;
         }).catch((error) => {
             console.log(error);
         });
@@ -51,6 +51,7 @@ export default class Login extends React.Component {
         this.refs.form.validate((valid) => {
             if(valid) {
                 login(this.state.form).then(res => {
+                    debugger;
                     if(res.code === "000001") {
                         localStorage.setItem("token", res.data);
                         localStorage.setItem("token_exp", new Date().getTime());

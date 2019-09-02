@@ -21,7 +21,6 @@ instance.interceptors.response.use(function (response) {
 
 export default {
     get (url, param) {
-        debugger;
         return new Promise((resolve, reject) => {
             instance.get(url, {
                 param: param
