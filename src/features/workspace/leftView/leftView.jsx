@@ -3,8 +3,9 @@ import ToolBar from "./toolbar/toolbar";
 import ProjectList from "./projectList/projectList";
 
 let leftViewStyle = {
-    left: 0,
     position: "absolute",
+    left: 0,
+    "zIndex": 10,
     width: "260px",
     height: "100%",
     backgroundColor: "#667fdd",

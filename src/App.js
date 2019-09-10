@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import RouteView from "./route/index";
+import RouteView from "./common/routes/index";
 
 function App() {
   return (

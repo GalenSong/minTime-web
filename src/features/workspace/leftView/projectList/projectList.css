@@ -1,0 +1,19 @@
+.projectList li>a {
+    width: 100%;
+    display: block;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 4px;
+    padding: 0 8px;
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+}
+.projectList .list-item .list-item-icon{
+    display: inline-block;
+    margin-right: 8px;
+    width: 24px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+}

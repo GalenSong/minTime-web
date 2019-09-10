@@ -1,8 +1,8 @@
 import React from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
-import Login from "../views/login/login";
-import SignUp from "../views/signup/signup";
-import Workspace from "../views/workspace/workspace";
+import Login from "../../features/login/login";
+import SignUp from "../../features/signup/signup";
+import Workspace from "../../features/workspace/workspace";
 
 class RouteView extends React.Component{
 

@@ -1,6 +1,7 @@
 import React from "react";
 import SmartProject from "./smartProject/smartProject";
 import Project from "./project/project";
+import "./projectList.css";
 
 class ProjectList extends React.Component {
 

@@ -1,7 +1,7 @@
 import React from "react";
 import {Card, Button, Form, Input} from "element-react";
-import getPublicKey from "../../api/getPublicKey";
-import signUp from "../../api/signup";
+import getPublicKey from "../../common/api/getPublicKey";
+import signUp from "./api/signupApi";
 import {Link} from "react-router-dom";
 import "./signup.css";
 
