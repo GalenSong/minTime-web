@@ -1,11 +1,11 @@
 import React from "react";
 import {Card, Button, Form, Input} from "element-react";
-import getPublicKey from "../../common/api/getPublicKey";
-import signUp from "./api/signupApi";
+import getPublicKey from "@common/api/getPublicKey";
+import register from "./api/register";
 import {Link} from "react-router-dom";
-import "./signup.css";
+import "./register.css";
 
-export default class SignUp extends React.Component {
+export default class Register extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -125,9 +125,17 @@ export default class SignUp extends React.Component {
                 alert("请检查登录信息");
                 return false; 
             }
-            signUp(this.state.form).then((msg) => {
-                if(msg.status === 200) {
-                    this.props.history.push("/login");
+            register(this.state.form).then((msg) => {
+                console.log(msg);
+                let {code} = msg.data;
+                if(code === 0){
+                    alert("该邮箱已被注册！");
+                    return;
+                }else if(code === 1) {
+                    alert("恭喜您，注册成功，即将跳转到登录界面");
+                    setTimeout(() => {
+                        this.props.history.push("/login");
+                    });
                 }
             }).catch((err) => {
                 console.log(err);
@@ -144,22 +152,22 @@ export default class SignUp extends React.Component {
 
     render() {
         return (
-            <Card className="signUpBox" bodyStyle={{padding: "30px"}}>
-                <Form ref="form" model={this.state.form} rules={this.state.rules} className="signUpInfo">
+            <Card className="registerBox" bodyStyle={{padding: "30px"}}>
+                <Form ref="form" model={this.state.form} rules={this.state.rules} className="registerInfo">
                     {/* <Form.Item prop="userName">
-                        <Input className="signUpInput" value={this.state.form.userName} placeholder="用户名" onChange={this.handleChange.bind(this, 'userName')}/>
+                        <Input className="registerInput" value={this.state.form.userName} placeholder="用户名" onChange={this.handleChange.bind(this, 'userName')}/>
                     </Form.Item> */}
                     <Form.Item prop="email">
-                        <Input className="signUpInput" value={this.state.form.email} placeholder="邮箱" onChange={this.handleChange.bind(this, "email")}/>
+                        <Input className="registerInput" value={this.state.form.email} placeholder="邮箱" onChange={this.handleChange.bind(this, "email")}/>
                     </Form.Item>
                     <Form.Item prop="password">
-                        <Input className="signUpInput" type="password" value={this.state.form.password} placeholder="输入密码" onChange={this.handleChange.bind(this, "password")}/>
+                        <Input className="registerInput" type="password" value={this.state.form.password} placeholder="输入密码" onChange={this.handleChange.bind(this, "password")}/>
                     </Form.Item>
                     <Form.Item prop="checkPassword">
-                        <Input className="signUpInput" type="password" value={this.state.form.checkPassword} placeholder="确认密码" onChange={this.handleChange.bind(this, "checkPassword")}/>
+                        <Input className="registerInput" type="password" value={this.state.form.checkPassword} placeholder="确认密码" onChange={this.handleChange.bind(this, "checkPassword")}/>
                     </Form.Item>
                     <Form.Item>
-                        <Button nativeType="button" type="primary" className="signUpBtn" onClick={this.handleSubmit}>注册</Button>
+                        <Button nativeType="button" type="primary" className="registerBtn" onClick={this.handleSubmit}>注册</Button>
                     </Form.Item>
                 </Form>
                 <Link to="/login">已有账号登录</Link>

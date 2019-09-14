@@ -1,4 +1,5 @@
 import React from "react";
+import getData from "./api/getData"
 
 const notifyStyle = {
     float: "right",
@@ -9,6 +10,14 @@ const notifyStyle = {
     textAlign: "center"
 }
 class Notify extends React.Component {
+
+    componentDidMount() {
+        getData().then((value) => {
+            localStorage.publicKey = value.data.key;
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
     render() {
         return(

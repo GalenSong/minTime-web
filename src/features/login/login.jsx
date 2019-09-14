@@ -14,17 +14,54 @@ export default class Login extends React.Component {
                 password: ""
             },
             rules: {
-                email: {
-                    required: true,
-                    message: "邮箱不能为空",
-                    trigger: "change"
-
-                },
-                password: {
-                    required: true,
-                    message: "密码不能为空",
-                    trigger: "change"
-                }
+                email: [
+                    {
+                        required: true,
+                        message: "请输入邮箱",
+                        trigger: "change"
+                    },
+                    {
+                        validator: (rule, value, callback) => {
+                            var pattern = /^\w+@[a-z0-9]+\.[a-z]{2,4}$/;
+                            if(value === "") {
+                                callback(new Error("请输入邮箱"));
+                                return;
+                            }
+                            if(!pattern.test(value)) {
+                                callback(new Error("您输入的邮箱不正确"));
+                                return;
+                            }
+                            callback();
+                        }, 
+                        trigger: 'blur'
+                    }
+                ],
+                password: [
+                    {
+                        required: true,
+                        message: "请输入密码",
+                        trigger: "change"
+                    },
+                    {
+                        validator: (rule, value, callback) => {
+                            var pattern = /^[a-zA-Z][\w_-]{5,15}$/;
+                            if(value === "") {
+                                callback(new Error("请输入密码"));
+                                return;
+                            };
+                            if(value.length < 6 || value.length > 16) {
+                                callback(new Error("你输入的密码不正确"));
+                                return;
+                            };
+                            if(!pattern.test(value)) {
+                                callback(new Error("您输入的密码不正确"));
+                                return;
+                            };
+                            callback();
+                        },
+                        trigger: 'blur'
+                    }
+                ]
             }
             
         };
@@ -51,11 +88,14 @@ export default class Login extends React.Component {
         this.refs.form.validate((valid) => {
             if(valid) {
                 login(this.state.form).then(res => {
-                    debugger;
-                    if(res.code === "000001") {
-                        localStorage.setItem("token", res.data);
+                    if(res.data.code === 1) {
+                        localStorage.setItem("token", res.data.data);
                         localStorage.setItem("token_exp", new Date().getTime());
                         this.props.history.push("/");
+                    }else if(res.data.code === -1) {
+                        alert("用户不存在，请检查登录信息！")
+                    }else if(res.data.code === 0) {
+                        alert("请检查密码是否正确")
                     }
                 });
             }
@@ -66,9 +106,6 @@ export default class Login extends React.Component {
         return (
             <Card className="loginBox" bodyStyle={{padding: "30px"}}>
                 <Form ref="form" model={this.state.form} rules={this.state.rules} className="loginInfo">
-                    {/* <Form.Item prop="userName">
-                        <Input className="loginInput" value={this.state.form.userName} placeholder="用户名" onChange={this.handleChange.bind(this, 'userName')}/>
-                    </Form.Item> */}
                     <Form.Item prop="email">
                         <Input className="loginInput" value={this.state.form.email} placeholder="邮箱" onChange={this.handleChange.bind(this, "email")}/>
                     </Form.Item>
@@ -79,7 +116,7 @@ export default class Login extends React.Component {
                         <Button nativeType="button" type="primary" className="loginBtn" onClick={this.handleSubmit}>登录</Button>
                     </Form.Item>
                 </Form>
-                <Link to="/signup">新用户注册</Link>
+                <Link to="/register">新用户注册</Link>
             </Card>
         )
     }

@@ -8,6 +8,8 @@ const config = {
 const instance = Axios.create(config)
 
 instance.interceptors.request.use(function (config) {
+    const token = localStorage.getItem("token");
+    config.headers.common["Authoriaztion"] = "Bearer " +token;
     return config;
 }, function (error) {
     return Promise.reject(error);
